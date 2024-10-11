@@ -12,8 +12,11 @@ class StaffRoute {
   }
 
   private initRoutes() {
-    this.router.post("/", this.staffController.create.bind(this.staffController));
-    this.router.get("/", this.staffController.findAll.bind(this.staffController));
+    this.router.post("/", this.staffController.create.bind(this.staffController)); // Create
+    this.router.get("/", this.staffController.findAll.bind(this.staffController)); // Get all
+    this.router.get("/:id", this.staffController.findById.bind(this.staffController)); // Get by ID
+    this.router.put("/:id", this.staffController.update.bind(this.staffController)); // Update
+    this.router.delete("/:id", this.staffController.delete.bind(this.staffController)); // Delete
   }
 }
 

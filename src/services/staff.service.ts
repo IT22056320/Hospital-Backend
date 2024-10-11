@@ -22,7 +22,6 @@ class StaffService {
   }
 
   async update(id: string, data: Partial<IStaff>): Promise<IStaff | null> {
-    // Cast data to UpdateQuery<IUser> to match Mongoose's update signature
     const updateData: UpdateQuery<IStaff> = { $set: data };
     return this.staffRepository.update(id, updateData);
   }
@@ -38,6 +37,8 @@ class StaffService {
   async findByName(name: string): Promise<IStaff | null> {
     return this.staffRepository.findByName(name);
   }
+
+  
 }
 
 export default StaffService;

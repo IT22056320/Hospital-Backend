@@ -7,6 +7,11 @@ import Database from './config/db';
 import dotenv from 'dotenv';
 import AuthRoutes from './routes/AuthRoutes';
 import staffRoute from './routes/staff.route';
+import staffDetailsRoutes from './routes/staffDetails.routes';
+import appointmentRoutes from './routes/appointment.routes';
+import bankDepositRoutes from './routes/bankDeposit.routes';
+import paymentRoutes from './routes/payment.routes';
+
 
 class App {
   private readonly app: Application;
@@ -41,6 +46,10 @@ class App {
   private initRoutes() {
     this.app.use('/api/v1/staff', staffRoute);
     this.app.use('/api/v1/auth', AuthRoutes);
+    this.app.use('/api/v1/staff-details', staffDetailsRoutes);
+    this.app.use('/api/v1/appointments', appointmentRoutes);
+    this.app.use('/api/v1/submit-bank-deposit', bankDepositRoutes);
+    this.app.use('/api/v1/create-payment-intent', paymentRoutes);
   }
 
   private initErrorHandling() {

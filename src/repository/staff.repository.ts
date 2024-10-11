@@ -8,13 +8,16 @@ class StaffRepository extends GenericRepository<IStaff> {
     super(Staff);
   }
 
-  // Create custom methods for user repository
   async findByEmail(email: string): Promise<IStaff | null> {
     return Staff.findOne({ email });
   }
 
   async findByName(name: string): Promise<IStaff | null> {
     return Staff.findOne({ name });
+  }
+
+  async findById(id: string): Promise<IStaff | null> {
+    return Staff.findById(id);
   }
 
   async update(id: string, update: UpdateQuery<IStaff>): Promise<IStaff | null> {
@@ -24,6 +27,7 @@ class StaffRepository extends GenericRepository<IStaff> {
   async delete(id: string): Promise<IStaff | null> {
     return Staff.findByIdAndDelete(id);
   }
+  
 }
 
 export default StaffRepository;
