@@ -13,7 +13,7 @@ class StaffDetailsRepository {
   }
 
   async updateByStaffId(staffId: string, update: Partial<IStaffDetails>): Promise<IStaffDetails | null> {
-    return StaffDetails.findOneAndUpdate({ staffId }, { $set: update }, { new: true });
+    return StaffDetails.findOneAndUpdate({ staffId }, { $set: update }, { new: true, upsert: true });
   }
 
   async deleteByStaffId(staffId: string): Promise<IStaffDetails | null> {

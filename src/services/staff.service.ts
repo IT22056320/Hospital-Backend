@@ -17,6 +17,12 @@ class StaffService {
     return this.staffRepository.findAll();
   }
 
+  async findByRole(role: string): Promise<IStaff[]> {
+    return this.staffRepository.findAllPaginatedWithFilter({
+      role
+    }, 1, 1000);
+  }
+
   async findById(id: string): Promise<IStaff | null> {
     return this.staffRepository.findById(id);
   }

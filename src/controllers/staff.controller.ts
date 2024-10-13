@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import IStaff from "../interfaces/staff.interface";
 import StaffService from "../services/staff.service";
+import StaffDetailService from "../services/staffDetails.service";
 
 class StaffController {
   private readonly staffService: StaffService;
+  private readonly staffDetailService: StaffDetailService;
 
   constructor() {
     this.staffService = new StaffService();
+    this.staffDetailService = new StaffDetailService();
   }
 
   async create(req: Request, res: Response) {
@@ -22,7 +25,13 @@ class StaffController {
 
   async findAll(req: Request, res: Response) {
     try {
-      const users = await this.staffService.findAll();
+      let users = [];
+      const { role } = req.query;
+      if(role){
+        users = await this.staffService.findByRole(role as string);
+      } else {
+        users = await this.staffService.findAll();
+      }
       res.status(200).json(users);
     } catch (error) {
       const err = error as Error; // Type-cast error to Error

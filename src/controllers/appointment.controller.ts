@@ -1,6 +1,5 @@
-// controllers/appointment.controller.ts
-
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import IAppointment from '../interfaces/appointment.interface';
 import AppointmentService from '../services/appointment.service';
 
@@ -22,10 +21,21 @@ class AppointmentController {
     }
   }
 
+  // Find all appointments without filtering by doctor or appointment ID
+  async findAll(req: Request, res: Response) {
+    try {
+      const appointments = await this.appointmentService.findAll();
+      res.status(200).json(appointments);
+    } catch (error) {
+      const err = error as Error;
+      res.status(500).json({ message: err.message });
+    }
+  }
+
   async findByDoctor(req: Request, res: Response) {
     try {
-      const doctorId = req.params.doctorId;
-      const appointments = await this.appointmentService.findByDoctor(doctorId);
+      const staffId = new mongoose.Types.ObjectId(req.params.staffId); // Convert staffId to ObjectId
+      const appointments = await this.appointmentService.findByDoctor(staffId);
       res.status(200).json(appointments);
     } catch (error) {
       const err = error as Error;

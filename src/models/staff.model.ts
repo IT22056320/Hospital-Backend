@@ -1,20 +1,29 @@
-import mongoose from "mongoose";
-import IStaff from "../interfaces/staff.interface";
+import mongoose, { Document } from 'mongoose';
 
-const staffSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    role: { type: String, required: true }, // New field for staff role
-    contactInformation: { type: String, required: true }, // New field for contact information
-    department: { type: String, required: true }, // New field for department
-    schedule: { type: String, required: true }, // New field for schedule
-  },
-  {
-    timestamps: true,
-  }
-);
+// Define the IStaff interface
+export interface IStaff extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: string; // doctor, nurse, admin, etc.
+  contactInformation: string;
+  department: string;
+  schedule: string;
+}
 
-const Staff = mongoose.model<IStaff>("Staff", staffSchema);
+// Define the schema
+const staffSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  role: { type: String, required: true }, // doctor, nurse, admin, etc.
+  contactInformation: { type: String, required: false },
+  department: { type: String, required: false },
+  schedule: { type: String, required: false },
+}, {
+  timestamps: true,
+});
+
+// Export the model and the interface
+const Staff = mongoose.model<IStaff>('Staff', staffSchema);
 export default Staff;

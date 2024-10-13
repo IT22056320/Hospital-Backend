@@ -1,7 +1,6 @@
-// services/appointment.service.ts
-
 import IAppointment from '../interfaces/appointment.interface';
 import AppointmentRepository from '../repository/appointment.repository';
+import mongoose from 'mongoose';
 
 class AppointmentService {
   private readonly appointmentRepository: AppointmentRepository;
@@ -14,8 +13,12 @@ class AppointmentService {
     return this.appointmentRepository.create(data);
   }
 
-  async findByDoctor(doctorId: string): Promise<IAppointment[]> {
-    return this.appointmentRepository.findByDoctor(doctorId);
+  async findAll(): Promise<IAppointment[]> {
+    return this.appointmentRepository.findAll();
+  }
+
+  async findByDoctor(staffId: mongoose.Types.ObjectId): Promise<IAppointment[]> {
+    return this.appointmentRepository.findByDoctor(staffId);
   }
 
   async findById(id: string): Promise<IAppointment | null> {

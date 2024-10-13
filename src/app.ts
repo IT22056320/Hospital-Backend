@@ -11,6 +11,7 @@ import staffDetailsRoutes from './routes/staffDetails.routes';
 import appointmentRoutes from './routes/appointment.routes';
 import bankDepositRoutes from './routes/bankDeposit.routes';
 import paymentRoutes from './routes/payment.routes';
+import scheduleRoutes from './routes/schedule.route';
 
 
 class App {
@@ -50,6 +51,7 @@ class App {
     this.app.use('/api/v1/appointments', appointmentRoutes);
     this.app.use('/api/v1/submit-bank-deposit', bankDepositRoutes);
     this.app.use('/api/v1/create-payment-intent', paymentRoutes);
+    this.app.use('/api/v1/staff/:staffId/schedule', scheduleRoutes);
   }
 
   private initErrorHandling() {
