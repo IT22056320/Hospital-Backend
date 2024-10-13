@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
+import bcrypt from 'bcrypt';
 import IStaff from "../interfaces/staff.interface";
 import StaffService from "../services/staff.service";
 import StaffDetailService from "../services/staffDetails.service";
+import User from "../models/User";
 
 class StaffController {
   private readonly staffService: StaffService;
@@ -14,8 +16,14 @@ class StaffController {
 
   async create(req: Request, res: Response) {
     try {
-      const data: IStaff = req.body;
-      const user = await this.staffService.create(data);
+      const userData: IStaff = req.body;
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+      await User.create({
+        username: userData.email,
+        email: userData.email,
+        password: hashedPassword
+      })
+      const user = await this.staffService.create(userData);
       res.status(201).json(user);
     } catch (error) {
       const err = error as Error; // Type-cast error to Error
