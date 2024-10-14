@@ -57,6 +57,20 @@ class AppointmentController {
     }
   }
 
+  async update(req: Request, res: Response) {
+    try {
+      const updatedAppointment = await this.appointmentService.update(req.params.id, req.body);
+      if (!updatedAppointment) {
+        res.status(404).json({ message: "Appointment not found" });
+      } else {
+        res.status(200).json(updatedAppointment);
+      }
+    } catch (error) {
+      const err = error as Error; // Type-cast error to Error
+      res.status(500).json({ message: err.message });
+    }
+  }
+
   async delete(req: Request, res: Response) {
     try {
       const appointment = await this.appointmentService.delete(req.params.id);
@@ -71,5 +85,6 @@ class AppointmentController {
     }
   }
 }
+
 
 export default AppointmentController;

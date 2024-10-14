@@ -36,6 +36,10 @@ class AppointmentRepository {
   async delete(id: string): Promise<IAppointment | null> {
     return Appointment.findByIdAndDelete(id);
   }
+
+  async update(id: string, updateData: Partial<IAppointment>): Promise<IAppointment | null> {
+    return Appointment.findByIdAndUpdate(id, updateData, { new: true });
+  }
 }
 
 export default AppointmentRepository;

@@ -6,6 +6,7 @@ interface IAppointment extends mongoose.Document {
   time: string;
   reason: string;
   patientName: string;
+  status: 'Active' | 'Canceled' | 'Completed'; // New status field to track appointment state
 }
 
 const appointmentSchema = new mongoose.Schema(
@@ -15,6 +16,7 @@ const appointmentSchema = new mongoose.Schema(
     time: { type: String, required: true },
     reason: { type: String, required: true },
     patientName: { type: String, required: true },
+    status: { type: String, enum: ['Active', 'Canceled', 'Completed'], default: 'Active' }, // New field for status
   },
   {
     timestamps: true, // Automatically manage createdAt and updatedAt fields

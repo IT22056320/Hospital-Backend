@@ -28,6 +28,10 @@ class AppointmentService {
   async delete(id: string): Promise<IAppointment | null> {
     return this.appointmentRepository.delete(id);
   }
+
+  async update(id: string, data: IAppointment): Promise<IAppointment | null> {
+    return this.appointmentRepository.update(id, data);
+  }
 }
 
 export default AppointmentService;
