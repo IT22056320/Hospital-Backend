@@ -6,25 +6,25 @@ class BankDepositController {
   async submitBankDeposit(req: Request, res: Response): Promise<void> {
     try {
       const { amount, reference, appointmentId } = req.body;
-      const depositProof = req.file; // Assuming you're handling file uploads
+      const depositProof = req.file; // multer adds this property
 
       // Check if the file was uploaded
       if (!depositProof) {
-        res.status(400).json({ error: 'Deposit proof is required.' });
+        res.status(400).json({ error: 'Deposit proof (PDF) is required.' });
         return; // Ensure the method ends after sending the response
       }
 
-      // Save the proof to disk or cloud storage
-      const filePath = path.join(__dirname, '../uploads', depositProof.filename);
-
-      // You can save the file to the disk (example)
-      fs.writeFileSync(filePath, depositProof.buffer); // Assuming `multer` is configured to provide a `buffer`
-
-      // Save deposit info in the database (assuming you have a Deposit model)
-      // const deposit = await Deposit.create({ amount, reference, appointmentId, proofPath: filePath });
+      // Save deposit proof information to the database (assuming you have a Deposit model)
+      // In a real case, you would store the file path in the database
+      // const deposit = await Deposit.create({
+      //   amount,
+      //   reference,
+      //   appointmentId,
+      //   proofPath: depositProof.path,
+      // });
 
       // Send success response
-      res.status(200).json({ message: 'Bank deposit submitted successfully!' });
+      res.status(200).json({ message: 'Bank deposit submitted successfully!', proofPath: depositProof.path });
     } catch (error) {
       if (error instanceof Error) {
         res.status(500).json({ error: error.message });

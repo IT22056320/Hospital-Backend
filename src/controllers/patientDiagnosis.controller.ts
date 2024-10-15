@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import PatientDiagnosisService from "../services/patientDiagnosis.service";
-import { IPatientDiagnosis } from "../models/patientDiagnosis.model";
+import IPatientDiagnosis from "../interfaces/patientDiagnosis.interface";
 
 class PatientDiagnosisController {
   private readonly patientDiagnosisService: PatientDiagnosisService;
@@ -14,11 +14,15 @@ class PatientDiagnosisController {
     try {
       const diagnosisData: IPatientDiagnosis = req.body;
       diagnosisData.patientId = req.params.id;
-      const diagnosis = await this.patientDiagnosisService.create(diagnosisData);
+      const diagnosis = await this.patientDiagnosisService.create(
+        diagnosisData
+      );
       res.status(201).json(diagnosis);
     } catch (error) {
       const err = error as Error;
-      res.status(500).json({ message: err.message });
+      res
+        .status(500)
+        .json({ message: "Error creating diagnosis: " + err.message });
     }
   }
 
@@ -26,7 +30,9 @@ class PatientDiagnosisController {
   async findByPatientId(req: Request, res: Response) {
     try {
       const { patientId } = req.params;
-      const diagnoses = await this.patientDiagnosisService.findByPatientId(patientId);
+      const diagnoses = await this.patientDiagnosisService.findByPatientId(
+        patientId
+      );
       res.status(200).json(diagnoses);
     } catch (error) {
       const err = error as Error;
@@ -37,7 +43,9 @@ class PatientDiagnosisController {
   // Find a diagnosis by ID
   async findById(req: Request, res: Response) {
     try {
-      const diagnosis = await this.patientDiagnosisService.findById(req.params.id);
+      const diagnosis = await this.patientDiagnosisService.findById(
+        req.params.id
+      );
       if (!diagnosis) {
         res.status(404).json({ message: "Diagnosis not found" });
       } else {
@@ -52,7 +60,10 @@ class PatientDiagnosisController {
   // Update a diagnosis
   async update(req: Request, res: Response) {
     try {
-      const diagnosis = await this.patientDiagnosisService.update(req.params.id, req.body);
+      const diagnosis = await this.patientDiagnosisService.update(
+        req.params.id,
+        req.body
+      );
       if (!diagnosis) {
         res.status(404).json({ message: "Diagnosis not found" });
       } else {
@@ -67,7 +78,9 @@ class PatientDiagnosisController {
   // Delete a diagnosis
   async delete(req: Request, res: Response) {
     try {
-      const diagnosis = await this.patientDiagnosisService.delete(req.params.id);
+      const diagnosis = await this.patientDiagnosisService.delete(
+        req.params.id
+      );
       if (!diagnosis) {
         res.status(404).json({ message: "Diagnosis not found" });
       } else {

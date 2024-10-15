@@ -1,5 +1,5 @@
+import IPatientDiagnosis from "../interfaces/patientDiagnosis.interface";
 import PatientDiagnosisRepository from "../repository/patientDiagnosis.repository";
-import { IPatientDiagnosis } from "../models/patientDiagnosis.model";
 import { UpdateQuery } from "mongoose";
 
 class PatientDiagnosisService {
@@ -25,7 +25,10 @@ class PatientDiagnosisService {
   }
 
   // Update diagnosis by ID
-  async update(id: string, data: Partial<IPatientDiagnosis>): Promise<IPatientDiagnosis | null> {
+  async update(
+    id: string,
+    data: Partial<IPatientDiagnosis>
+  ): Promise<IPatientDiagnosis | null> {
     const updateData: UpdateQuery<IPatientDiagnosis> = { $set: data };
     return this.patientDiagnosisRepository.update(id, updateData);
   }

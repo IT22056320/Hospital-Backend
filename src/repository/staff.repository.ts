@@ -1,4 +1,5 @@
-import { IStaff } from "../models/staff.model";  // Importing IStaff from model now
+import { IStaff } from "../models/staff.model";
+import { CustomSchedule } from "../interfaces/staff.interface";  // Import the CustomSchedule interface
 import Staff from "../models/staff.model";
 import mongoose, { UpdateQuery } from "mongoose";
 import GenericRepository from "./generic.repository";
@@ -6,6 +7,10 @@ import GenericRepository from "./generic.repository";
 class StaffRepository extends GenericRepository<IStaff> {
   constructor() {
     super(Staff);
+  }
+
+  async findAll(): Promise<IStaff[]> {
+    return Staff.find();  // This will retrieve all staff members
   }
 
   // Find staff member by email
@@ -31,6 +36,24 @@ class StaffRepository extends GenericRepository<IStaff> {
   // Delete staff member by ID
   async delete(id: string): Promise<IStaff | null> {
     return Staff.findByIdAndDelete(id);
+  }
+
+  // Add a custom schedule for a specific date
+  async addCustomSchedule(id: string, customSchedule: CustomSchedule): Promise<IStaff | null> {
+    return Staff.findByIdAndUpdate(
+      id,
+      { $push: { "schedule.custom": customSchedule } },  // Push to the custom schedule array
+      { new: true }
+    );
+  }
+
+  // Remove a custom schedule for a specific date
+  async removeCustomSchedule(id: string, customScheduleDate: Date): Promise<IStaff | null> {
+    return Staff.findByIdAndUpdate(
+      id,
+      { $pull: { "schedule.custom": { date: customScheduleDate } } },  // Pull by the specific date
+      { new: true }
+    );
   }
 }
 

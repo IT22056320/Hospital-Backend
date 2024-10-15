@@ -6,7 +6,7 @@ const router = Router();
 const bankDepositController = new BankDepositController();
 const upload = multer({ dest: 'uploads/' }); // Set up file upload destination
 
-// Route for submitting bank deposit proof
-router.post('/submit-bank-deposit', upload.single('depositProof'), bankDepositController.submitBankDeposit.bind(bankDepositController));
-
+router.post('/submit-bank-deposit', upload.single('depositProof'), (req, res) => {
+    bankDepositController.submitBankDeposit(req, res);
+  });
 export default router;

@@ -1,4 +1,4 @@
-import IStaff from "../interfaces/staff.interface";
+import { IStaff } from "../models/staff.model";  // Import from Mongoose model
 import StaffRepository from "../repository/staff.repository";
 import { UpdateQuery } from "mongoose";
 
@@ -44,7 +44,10 @@ class StaffService {
     return this.staffRepository.findByName(name);
   }
 
-  
+  // Update schedule method to handle optional schedule (recurring and custom)
+  async updateSchedule(staffId: string, schedule: IStaff["schedule"]): Promise<IStaff | null> {
+    return this.staffRepository.update(staffId, { schedule });
+  }
 }
 
 export default StaffService;

@@ -10,11 +10,14 @@ class PatientDiagnosisRepository extends GenericRepository<IPatientDiagnosis> {
 
   // Find diagnoses by patient ID
   async findByPatientId(patientId: string): Promise<IPatientDiagnosis[]> {
-    return PatientDiagnosis.find({ patientId });
+    return PatientDiagnosis.find({ patientId }).exec(); // Added .exec() for better query handling
   }
 
   // Update diagnosis by ID
-  async update(id: string, update: UpdateQuery<IPatientDiagnosis>): Promise<IPatientDiagnosis | null> {
+  async update(
+    id: string,
+    update: UpdateQuery<IPatientDiagnosis>
+  ): Promise<IPatientDiagnosis | null> {
     return PatientDiagnosis.findByIdAndUpdate(id, update, { new: true });
   }
 

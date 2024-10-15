@@ -13,7 +13,9 @@ import bankDepositRoutes from './routes/bankDeposit.routes';
 import paymentRoutes from './routes/payment.routes';
 import scheduleRoutes from './routes/schedule.route';
 import PatientDiagnosisRoute from './routes/PatientDiagnosisRoute';
-
+import paymentRoute from './routes/payment.routes';
+import insuranceRoute from './routes/insurance.route';
+import profileRoutes from './routes/profile.routes'; // with the extra 's'
 
 class App {
   private readonly app: Application;
@@ -54,6 +56,9 @@ class App {
     this.app.use('/api/v1/create-payment-intent', paymentRoutes);
     this.app.use('/api/v1/staff/:staffId/schedule', scheduleRoutes);
     this.app.use("/api/v1/patient-diagnosis", PatientDiagnosisRoute);
+    this.app.use('/api/v1/payment', paymentRoute);
+    this.app.use('/api/insurance', insuranceRoute);
+    this.app.use("/api/v1/profile", profileRoutes);
   }
 
   private initErrorHandling() {

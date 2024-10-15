@@ -17,6 +17,7 @@ class AppointmentRoute {
     this.router.get('/:id', this.appointmentController.findById.bind(this.appointmentController)); // Get appointment by ID
     this.router.delete('/:id', this.appointmentController.delete.bind(this.appointmentController)); // Delete appointment
     this.router.get('/', this.appointmentController.findAll.bind(this.appointmentController)); // Get all appointments (new route)
+    this.router.put('/:id', this.appointmentController.update.bind(this.appointmentController)); // Update appointment
   }
 }
 
