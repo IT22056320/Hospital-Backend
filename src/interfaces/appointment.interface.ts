@@ -16,6 +16,7 @@ interface IAppointment extends mongoose.Document {
   time: string;
   reason: string;
   patientName: string;
+  status: 'Active' | 'Canceled' | 'Completed';
 }
 
 export default IAppointment;
